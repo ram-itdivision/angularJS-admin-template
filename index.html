@@ -2,143 +2,150 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport"
-    content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no;user-scalable=0;" />
-  <title>Student Info</title>
-  <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-  <link href="assets/css/theme-style.css" rel="stylesheet" type="text/css" />
-  <link href="assets/css/mobile-style.css" rel="stylesheet" type="text/css" />
-  <!-- Angular JS -->
-  <script src="angularsupport/angular.min.js" type="text/javascript"></script>
-  <script src="angularsupport/ngStorage.js"></script>
-  <script type="text/javascript">
-    var app = angular.module("studentapp", ['ngStorage']);
-    app.controller('stdappctrl', function ($scope, $http, $filter, $localStorage, $window, $interval) {
-      var apipath = "http://localhost:3006/api";
-      $scope.login_submit = function (logdata) {
-        console.log(logdata);
-        var obj = {
-          "studentNo": logdata.suc,
-          "password": logdata.password
-        }
-        $http.post(apipath+"/student/loginStudent", obj).success(function (data) {
-          console.log(data);
-          if (data.result.length != 0) {
-            $window.localStorage.setItem('stdappdetails', JSON.stringify(data.result[0]));
-            window.location.href = "home.html";
-          }
-          else {
-            $scope.loginerrormsg = "Invalid Detials";
-          }
-        });
-      }
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-      $scope.reg_submit = function (regsdata) {
-        console.log(regsdata);
-        var obj = {
-          "studentNo": regsdata.suc,
-          "mobileNo": regsdata.mobile
-        }
-        $http.post(apipath+"/student/joinstudent", obj).success(function (data) {
-          console.log(data);
-          if (data.result.length != 0) {
-            $window.localStorage.setItem('stdappdetails', JSON.stringify(data.result[0]));
-            window.location.href = "home.html";
-          }
-          else {
-            $scope.joinerrormsg = "Invalid Detials";
-          }
-        });
-      }
-    }); 
-  </script>
+  <title>Abhyas Admin</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+ <script src="angular/angular.min.js" type="text/javascript"></script>
+    <script src="angular/angular-route.min.js" type="text/javascript"></script>
+    <script src="angular/ngStorage.js"></script>
+        <script type="text/javascript" src="controller/mainctrl.js"></script>
+
+  <!-- Favicons -->
+  <link href="assets/img/abhyas logo.png" rel="icon">
+
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+
 </head>
 
-<body ng-app="studentapp" ng-controller="stdappctrl" class="bghome">
-  <section class=" h-100">
-    <main class="h-100 row">
-      <header class="col-lg-12 align-self-center TopHeader">
-        <div class="d-flex justify-content-center align-items-center flex-column">
-          <figure class="d-block mt-2">
-            <img src="assets/images/student-portal-logo.svg" class="portal-logo" />
-          </figure>
-          <div class="mb-2 tabBlock ">
-            <ul class="nav nav-tabs cstmTabs mb-3" id="myTab" role="tablist">
-              <li class="nav-item">
-                <button class="active h6" id="login" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
-                  aria-selected="true">Login</button>
-              </li>
-              <li class="nav-item">
-                <button class="h6" id="signup" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
-                  aria-selected="false"> Registration</button>
-              </li>
-            </ul>
-            <div class="tab-content px-3 " id="myTabContent">
-              <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="login"
-                tabindex="0">
-                <form class="mt-1" ng-submit="login_submit(login)">
-                  <div class="form-floating ">
-                    <input type="text" class="form-control position-relative" id="floatingInput" maxlength="10"
-                      placeholder="Student Unique Code" ng-model="login.suc"
-                      onkeypress="return event.charCode>47 && event.charCode<58" />
-                    <label for="floatingInput">Student Unique Code</label>
-                    <img src="assets/images/student.svg" class="position-absolute inputPic">
+<script>
+  var app = angular.module("AbhyasApp", ['ngStorage']);
+    app.controller('loginCtrl', function($scope, $http, $filter, $localStorage,$window) { 
+      // alert("welcome");
+      var apipath='';
+
+      if($window.localStorage.getItem('admindata')){
+                window.location.href = 'home.html';
+            }  
+      $scope.loginsubmit = function(udata){
+        console.log(udata.username);
+        console.log(udata.password)
+
+        if(udata.username=="admin", udata.password=="admin"){
+          var obj ={
+            "admin_id":1,
+            "admin_name" : 'Admin'
+          }
+          $window.localStorage.setItem('admindata',obj)
+          window.location.href="home.html";
+          
+        }else{
+          $scope.msg = "Invalid Credentials";
+
+          // alert("Invalid OTP")
+        }
+      
+      }
+    });
+  
+  </script>
+
+
+<body ng-app="AbhyasApp" ng-controller="loginCtrl">
+
+  <main>
+    <div class="container">
+
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+              <div class="d-flex justify-content-center py-4">
+                
+				<img src="assets/img/analysis_logo.png" height="80" alt="">
+              </div><!-- End Logo -->
+
+              <div class="card mb-3">
+
+                <div class="card-body">
+
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                
+                 <h3 class="text-danger text-center" style="font-size: 21.5px;"> {{msg}} </h3>
                   </div>
-                  <div class="form-floating position-relative">
-                    <input type="password" class="form-control position-relative" id="floatingPassword"
-                      placeholder="Password" ng-model="login.password" />
-                    <label for="floatingPassword">Password</label>
-                    <img src="assets/images/lock.svg" class="position-absolute inputPic">
-                  </div>
-                  <p class="h5 text-danger text-center mt-2"> {{loginerrormsg}} </p>
-                  <div class="d-flex justify-content-center">
-                    <a href="dashboard.html"> <button type="submit" class="btn btn-primary ">Login</button></a>
-                  </div>
-                </form>
+
+                  <form class="row g-3 needs-validation" ng-submit="loginsubmit(udata)" novalidate>
+
+                    <div class="col-12">
+                      <label for="yourUsername" class="form-label">Username</label>
+                      <div class="input-group has-validation">
+                  
+                        <input type="text" name="username" class="form-control" id="yourUsername" name="username" ng-model="udata.username" required>
+                        <div class="invalid-feedback">Please enter your username.</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourPassword" class="form-label">Password</label>
+                      <input type="password" name="password" ng-model="udata.password" class="form-control" name="password" id="yourPassword" required>
+                      <div class="invalid-feedback">Please enter your password!</div>
+                    </div>
+
+                    
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100" type="submit">Login</button>
+                    </div>
+                   
+                  </form>
+
+                </div>
               </div>
-              <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="signup" tabindex="0">
-                <form class="mt-1" ng-submit="reg_submit(registration)">
-                  <div class="form-floating ">
-                    <input type="text" class="form-control position-relative" id="floatingInput" maxlength="10"
-                      placeholder="Student Unique Code" ng-model="registration.suc"
-                      onkeypress="return event.charCode>47 && event.charCode<58" />
-                    <label for="floatingInput">Student Unique Code</label>
-                    <img src="assets/images/student.svg" class="position-absolute inputPic">
-                  </div>
-                  <div class="form-floating ">
-                    <input type="text" class="form-control position-relative" id="floatingPassword" maxlength="10"
-                      placeholder="Registered Mobile No." ng-model="registration.mobile"
-                      onkeypress="return event.charCode>47 && event.charCode<58" />
-                    <label for="floatingPassword">Registered Mobile No.</label>
-                    <img src="assets/images/phone.svg" class="position-absolute inputPic">
-                  </div>
-                  <div class="form-floating ">
-                    <input type="text" class="form-control position-relative" id="floatingPassword"
-                      placeholder="Your Personal Email ID" ng-model="registration.email" />
-                    <label for="floatingPassword">Your Personal Email ID</label>
-                    <img src="assets/images/email.svg" class="position-absolute inputPic">
-                  </div>
-                  <p class="h5 text-danger text-center mt-2"> {{joinerrormsg}} </p>
-                  <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary ">Submit</button>
-                  </div>
-                </form>
-              </div>
+
+             
             </div>
           </div>
         </div>
-      </header>
-    </main>
-  </section>
-  <div class="aeduLogo">
-    <img src="assets/images/aditya-logo.png" class="adity_logo" />
-  </div>
-  <div class="analysis-logo-blk">
-    <img src="assets/images//analysis_logo.png" class="analysis-logo" />
-  </div>
-  <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+      </section>
+
+    </div>
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.min.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
 </body>
 
 </html>
