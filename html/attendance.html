@@ -1,0 +1,77 @@
+<div class="bodyWarper" ng-controller="attendance" ng-init="onloading()">  
+    <section class="card card-body">
+        <div class="row my-2">
+            <div class="col-md-12">
+                <article class="horizontal-line">
+                    <h3>Attendance Report</h3>
+                </article>
+            </div>
+        </div> 
+        <div class="text-center" ng-show="loadingimg==0"> 
+            <img src="./assets/images/loading.gif" style="height:100px; width:100px;"> 
+        </div> 
+        <div class="row">
+            <div class="col-md-6">
+                <div class="table-responsive text-nowrap" ng-show="loadingimg==1">
+                    <!-- <h6 class="mb-0">Monthwise Report:</h6><hr class="mt-2" width="145px;"/> -->
+                    <table class="table mb-3" >  
+                        <thead class="table-secondary">
+                            <tr class="text-center"> 
+                                <th> Month</th>
+                                <th> Present Days</th> 
+                                <th> Absent Days</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr  class="text-center" ng-repeat="presentattendance in stdpresentdt">  
+                                <td> {{presentattendance.monthname}} </td>
+                                <td> <b class="bold"> {{presentattendance.presentdays}}</b>/{{presentattendance.workingdays}}</td>
+                                <td> {{presentattendance.workingdays*1 - presentattendance.presentdays*1}} </td>
+                            </tr>
+                        </tbody>
+                    </table>  
+                </div>
+            </div>
+            <div class="col-md-6">
+                <canvas id="attendancegraph" style="width:50%"></canvas>
+            </div>
+        </div>
+    </section> 
+    <section class="card card-body mt-3">
+        <div class="row my-2">
+            <div class="col-md-12">
+                <article class="horizontal-line">
+                    <h3>Absentees Report</h3>
+                </article>
+            </div>
+        </div>
+        <div class="text-center" ng-show="loadingimg==0"> 
+            <img src="./assets/images/loading.gif" style="height:100px; width:100px;"> 
+        </div> 
+       <div class="row">
+        <div class="col-md-6"ng-show="loadingimg==1">
+            <table class="table table-sm mb-3">  
+                <thead class="table-secondary">
+                    <tr class="text-center"> 
+                        <th>Date</th>
+                        <th>Session</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-start" ng-repeat="absentattendance in stdabsentdt | orderBy:'-' | limitTo: '10'">  
+                        <td> {{absentattendance.absentdate}} </td>
+                        <td> {{absentattendance.session}} </td>
+                    </tr>
+                </tbody>
+            </table>
+            <small class="text-danger"> *F.N means ForeNoon, *A.N means AfterNoon</small>
+        </div>
+       </div>
+    </section> 
+</div>
+<style>
+    #chartdiv {
+      width: 100%;
+      height: 100%;
+    }
+    </style>

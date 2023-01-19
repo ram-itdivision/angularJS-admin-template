@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport"
+    content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no;user-scalable=0;" />
+  <title>Student Info</title>
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/css/theme-style.css" rel="stylesheet" type="text/css" />
+  <link href="assets/css/mobile-style.css" rel="stylesheet" type="text/css" />
+  <!-- Angular JS -->
+  <script src="angularsupport/angular.min.js" type="text/javascript"></script>
+  <script src="angularsupport/ngStorage.js"></script>
+  <script type="text/javascript">
+    var app = angular.module("studentapp", ['ngStorage']);
+    app.controller('stdappctrl', function ($scope, $http, $filter, $localStorage, $window, $interval) {
+      var apipath = "http://localhost:3006/api";
+      $scope.login_submit = function (logdata) {
+        console.log(logdata);
+        var obj = {
+          "studentNo": logdata.suc,
+          "password": logdata.password
+        }
+        $http.post(apipath+"/student/loginStudent", obj).success(function (data) {
+          console.log(data);
+          if (data.result.length != 0) {
+            $window.localStorage.setItem('stdappdetails', JSON.stringify(data.result[0]));
+            window.location.href = "home.html";
+          }
+          else {
+            $scope.loginerrormsg = "Invalid Detials";
+          }
+        });
+      }
+
+      $scope.reg_submit = function (regsdata) {
+        console.log(regsdata);
+        var obj = {
+          "studentNo": regsdata.suc,
+          "mobileNo": regsdata.mobile
+        }
+        $http.post(apipath+"/student/joinstudent", obj).success(function (data) {
+          console.log(data);
+          if (data.result.length != 0) {
+            $window.localStorage.setItem('stdappdetails', JSON.stringify(data.result[0]));
+            window.location.href = "home.html";
+          }
+          else {
+            $scope.joinerrormsg = "Invalid Detials";
+          }
+        });
+      }
+    }); 
+  </script>
+</head>
+
+<body ng-app="studentapp" ng-controller="stdappctrl" class="bghome">
+  <section class=" h-100">
+    <main class="h-100 row">
+      <header class="col-lg-12 align-self-center TopHeader">
+        <div class="d-flex justify-content-center align-items-center flex-column">
+          <figure class="d-block mt-2">
+            <img src="assets/images/student-portal-logo.svg" class="portal-logo" />
+          </figure>
+          <div class="mb-2 tabBlock ">
+            <ul class="nav nav-tabs cstmTabs mb-3" id="myTab" role="tablist">
+              <li class="nav-item">
+                <button class="active h6" id="login" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
+                  aria-selected="true">Login</button>
+              </li>
+              <li class="nav-item">
+                <button class="h6" id="signup" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+                  aria-selected="false"> Registration</button>
+              </li>
+            </ul>
+            <div class="tab-content px-3 " id="myTabContent">
+              <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="login"
+                tabindex="0">
+                <form class="mt-1" ng-submit="login_submit(login)">
+                  <div class="form-floating ">
+                    <input type="text" class="form-control position-relative" id="floatingInput" maxlength="10"
+                      placeholder="Student Unique Code" ng-model="login.suc"
+                      onkeypress="return event.charCode>47 && event.charCode<58" />
+                    <label for="floatingInput">Student Unique Code</label>
+                    <img src="assets/images/student.svg" class="position-absolute inputPic">
+                  </div>
+                  <div class="form-floating position-relative">
+                    <input type="password" class="form-control position-relative" id="floatingPassword"
+                      placeholder="Password" ng-model="login.password" />
+                    <label for="floatingPassword">Password</label>
+                    <img src="assets/images/lock.svg" class="position-absolute inputPic">
+                  </div>
+                  <p class="h5 text-danger text-center mt-2"> {{loginerrormsg}} </p>
+                  <div class="d-flex justify-content-center">
+                    <a href="dashboard.html"> <button type="submit" class="btn btn-primary ">Login</button></a>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="signup" tabindex="0">
+                <form class="mt-1" ng-submit="reg_submit(registration)">
+                  <div class="form-floating ">
+                    <input type="text" class="form-control position-relative" id="floatingInput" maxlength="10"
+                      placeholder="Student Unique Code" ng-model="registration.suc"
+                      onkeypress="return event.charCode>47 && event.charCode<58" />
+                    <label for="floatingInput">Student Unique Code</label>
+                    <img src="assets/images/student.svg" class="position-absolute inputPic">
+                  </div>
+                  <div class="form-floating ">
+                    <input type="text" class="form-control position-relative" id="floatingPassword" maxlength="10"
+                      placeholder="Registered Mobile No." ng-model="registration.mobile"
+                      onkeypress="return event.charCode>47 && event.charCode<58" />
+                    <label for="floatingPassword">Registered Mobile No.</label>
+                    <img src="assets/images/phone.svg" class="position-absolute inputPic">
+                  </div>
+                  <div class="form-floating ">
+                    <input type="text" class="form-control position-relative" id="floatingPassword"
+                      placeholder="Your Personal Email ID" ng-model="registration.email" />
+                    <label for="floatingPassword">Your Personal Email ID</label>
+                    <img src="assets/images/email.svg" class="position-absolute inputPic">
+                  </div>
+                  <p class="h5 text-danger text-center mt-2"> {{joinerrormsg}} </p>
+                  <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary ">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+    </main>
+  </section>
+  <div class="aeduLogo">
+    <img src="assets/images/aditya-logo.png" class="adity_logo" />
+  </div>
+  <div class="analysis-logo-blk">
+    <img src="assets/images//analysis_logo.png" class="analysis-logo" />
+  </div>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

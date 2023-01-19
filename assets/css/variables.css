@@ -1,0 +1,38 @@
+:root {
+        /*Colors*/
+            --theme_color:#F96E07;
+            --secondary_color1:#353689;
+            --secondary_color2:#219653;
+            --text_heading:rgba(0,0,0,0.8);
+            --text_para:rgba(0,0,0,0.8);
+            --text_muted:rgba(0,0,0,0.6);
+        /* =================================== */
+
+        /*text-size*/
+            --base_text:calc(10px + 0.5vh);
+            --heading_1:calc(34px + 1vw);
+            --heading_2:calc(2em + 0.2vw);
+            --heading_3:calc(0.85em + 0.2vw);
+            --heading_4:calc(0.85em + 0.2vw);
+            --heading_5:calc(0.85em + 0.2vw);
+            --heading_6:calc(11px + 0.2vw);
+            --heading_md:calc(1.1em + 0.2vw);
+        /* =================================== */
+    /*border-raids*/
+         --brdr:6px;
+ /*border-raids end*/
+
+
+             /*text-size Mobile*/
+             --base_text_m:calc(12px + 0.255vh);
+             --heading_1_m:calc(34px + 1vh);
+             --heading_2_m:calc(1.575em + 0.2vh);
+             --heading_3_m:calc(0.85em + 0.2vh);
+             --heading_4_m:calc(0.85em + 0.2vh);
+             --heading_5_m:calc(0.85em + 0.2vh);
+             --heading_6_m:calc(11px + 0.2vh);
+             --heading_md_m:calc(1.1em + 0.1vh);
+         /* =================================== */
+
+}
+           

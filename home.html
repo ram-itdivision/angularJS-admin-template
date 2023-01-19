@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="assets/js/jquery.gScrollingCarousel.css" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport"
+        content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no,user-scalable=0" />
+    <title>Student Dashboard</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/theme-style.css" rel="stylesheet" type="text/css" /> 
+    <link href="assets/css/docs.css" rel="stylesheet"> 
+    <!-- Chart js --> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <!-- AngularJS -->
+	<script src="angularsupport/angular.min.js" type="text/javascript"></script>
+    <script src="angularsupport/angular-route.min.js" type="text/javascript"></script>
+    <script src="angularsupport/ngStorage.js"></script>
+    <script src="ocLazyLoad/dist/ocLazyLoad.js"></script>
+    <script src="angularsupport/angular-sanitize.min.js"></script>
+    <script src="controller/mainctrl.js" type="text/javascript"></script> 
+    <script src="controller/dashboard.js" type="text/javascript"></script> 
+</head>
+<body ng-app="studentapp" ng-controller="dashboard">
+    <header class="innerHeader">
+        <a class="navbar-brand" href="#">
+            <img src="assets/images/aeg.png" class="logo">
+        </a>
+    </header>
+    <ng-view> </ng-view>
+    <!-- Swiper -->
+<footer class="d-flex align-items-center justify-content-between px-3 inner_footer d-lg-none d-block">
+    <aside ng-class="classvariable[1]=='dashboard'?'d-grid text-center activeIcons':'d-grid text-center'" title="Atttendance">
+        <div><a href="#/dashboard"><img src="assets/images/home.svg" class="footer_menu_icon" title="Atttendance"></a></div>
+       
+       </aside>
+    <aside ng-class="classvariable[1]=='attendance'?'d-grid text-center activeIcons':'d-grid text-center'" title="Atttendance">
+     <div><a href="#/attendance"><img src="assets/images/attendance.svg" class="footer_menu_icon"></a></div>
+    
+    </aside>
+    <aside ng-class="classvariable[1]=='acadamic'?'d-grid text-center activeIcons':'d-grid text-center'" title="Academic">
+        <div><a href="#/academic"><img src="assets/images/acadamic.svg" class="footer_menu_icon"></a></div>
+  
+</aside>
+   
+<aside ng-class="classvariable[1]=='competative'?'d-grid text-center activeIcons':'d-grid text-center'" title="Competitive">
+    <div><a href="#/competative"><img src="assets/images/competive.svg" class="footer_menu_icon"></a></div>
+  
+</aside>
+<aside ng-class="classvariable[1]=='finance'?'d-grid text-center activeIcons':'d-grid text-center'" title="Finance">
+    <div><a href="#/finance"><img src="assets/images/fee.svg" class="footer_menu_icon"></a></div>
+  
+</aside>
+</footer>
+
+    <script src="assets/js/jquery-3.4.1.js" crossorigin="anonymous"  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" ></script>
+    <script src="assets/js/bootstraps.bundle.min.js" crossorigin="anonymous" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" ></script>
+    <script src="assets/js/jquery.gScrollingCarousel.js"></script> 
+</body>
+
+</html>

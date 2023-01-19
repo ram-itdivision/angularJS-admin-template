@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADITYA</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500;600;700&family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="../angularsupport/angular.min.js" type="text/javascript"></script>
+    <script src="../angularsupport/ngStorage.js"></script>
+	<script type="text/javascript">
+        	var app = angular.module("verifyreceipt", ['ngStorage']);
+            app.controller('verify', function($scope, $http, $filter, $localStorage,$window) {
+                // alert('welcome');
+                $scope.showdiv=1;
+                var currentLocation = String($window.location.href);
+                console.log(currentLocation)
+                const myArray = currentLocation.split("id=");
+                console.log(myArray[1])
+                var reporturl = 'https://apis.aditya.ac.in/analysis/receipt/verify/'+myArray[1];
+			   //var reporturl = 'http://localhost:3006/api/receipt/verify/'+myArray[1];
+                console.log(reporturl);	
+                $http.get(reporturl).success(function(data) {	
+                 
+                $scope.showdiv=2;
+                //console.log(data);
+                $scope.campuslist = data[0];
+				console.log($scope.campuslist);
+                // var dateoffee=$scope.campuslist.feeinfo;
+                // console.log(dateoffee);
+
+               /* $scope.sumofamount=getSumElements(data,'amount_paid')+getSumElements(data,'gst_paid');
+                console.log($scope.sumofamount);
+                function getSumElements(obj, field) {
+                    //console.log(obj);
+                    var total = 0;
+                    for (var i in obj){
+                        //console.log(obj[i][field]);
+                        total += Number(obj[i][field]);
+                        
+                    }
+                    return total;
+                    
+                }*/
+
+  
+                 });
+
+                 
+             });
+    </script>
+</head>
+<body  style="background-color: #bbbbbb;" ng-app="verifyreceipt" ng-controller="verify">
+    <div class="container-fluid mt-0 p-2" style="font-family: 'Poppins', sans-serif;">
+    <div id="d-wrapper">
+	
+	<div class="rows" style="padding-top:200px;" ng-show="showdiv==1">
+            <div class="col-md-4">
+                 
+                <div class="box">
+        <img src="./assets/qr-scan.gif" class="img-fluid my-4"> 
+        </div>
+        </div>
+        </div>
+		
+		
+		
+        <div class="zig-zag-bottom" ng-show="showdiv==2">
+            
+            <div class="media ml-4 mt-0 mr-4 pt-4">
+                <img src="assets/emblom.png" class="mr-2" alt="..." style="width: 90px;">
+                <div class="media-body  text-left">
+			<h5 class="mt-0 h6"><b>{{campuslist.feeinfo[0].school_name}}</b> </h5>
+			<div style="font-size:10px;">{{campuslist.feeinfo[0].society_name}}</div>
+			<div style="font-size:14px;">{{campuslist.feeinfo[0].school_city}}</div>
+                </div>
+              </div>
+            
+            <div>
+                
+              
+               <div class="ml-4 mr-4 mt-4">
+               <table class="w-100"  >
+                <tr>
+                    <td><h4 class="h3">FEE RECEIPT</h4>
+                        <div  style="font-size: 14px;">
+                            <span>#{{campuslist.feeinfo[0].receipt_no}}</span><br/>
+                            <span>{{campuslist.feeinfo[0].paymentdate | date:'dd-MM-yyyy'}}</span>
+                            </div>
+                    </td>
+                    <td>
+                        <img class="float-right" src="https://chart.googleapis.com/chart?chs=100x100&chld=L|0&&cht=qr&chl={{campuslist.feeinfo[0].receipt_no}}&choe=UTF-8" >
+						
+                    </td>
+                  
+
+                </tr>
+            </table>
+            <hr/>
+            </div>
+            </div>
+            <div class="row ml-4 mr-4  mt-0">
+                <div class="col-12">
+                   
+                    <div class="row">
+                        
+                        <p class="text-left mt-2">
+                            <small>SUC: {{campuslist.student_no}} </small><br/>
+                            <span class="h6">{{campuslist.student_name}}</span></br>
+                            <small>C/O {{campuslist.father_name}}</small></p>
+                        </p>
+                    </div>
+                   
+
+                    <table class="w-100" style="font-size: 14px;">
+                        <tr>
+                            <td>
+                                <p class="text-left">
+                                    <small>Branch</small><br/>
+                                    <span style="font-weight: 500;">{{campuslist.campus_name}}</span></p>
+                                </td>
+                            <td>  <p class="text-left">
+                                <small>Course Details</small><br/>
+                                <span style="font-weight: 500;">{{campuslist.course_name}}/{{campuslist.section_name}}/{{campuslist.roll_no}}</span></p></td>
+
+                           
+        
+                        </tr>
+                    </table>
+
+                    <table class="w-100 mt-4" style="font-size: 14px;" ng-init="receipt.total = {}">
+                        <tr>
+                            <td><small>SNO</small></td>
+                            <td><small>YEAR</small></td>
+                            <td><small>FEE NAME</small></td>
+                            <td align="right"><small>AMOUNT</small></td>
+                        </tr>
+                        <tr ng-repeat="x in campuslist.feeinfo">
+                            <td>{{$index+1}}</td>
+                            <td>{{x.year_name}}</td>
+                            <td>{{x.fee_name}}</td>
+                            <td align="right"  ng-init="receipt.total.amount = receipt.total.amount + (1*x.amount_paid)">{{x.amount_paid}}</td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td colspan="3" align="right"><strong>TOTAL</strong></td>
+                            <td align="right"><strong>{{receipt.total.amount }}</strong></td>
+                        </tr>
+                       
+                    </table>
+
+                    <p style="font-size:10px;text-align: center;margin-top: 10px;">This is computer generated receipt signature not required.</p>
+               
+                    <table class="w-100">
+                        <tr>
+                            <td>  <img class="text-left" src="assets/analysis.png" style="width: 80px;"></td>
+                            <td>    <img class="float-right" src="assets/verified.png" style="width: 60px;"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            
+               
+              
+            
+              
+           
+            
+        </div>
+    </div>
+    <br/>
+    <br/>
+
+</div>
+    
+</body>
+</html>

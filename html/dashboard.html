@@ -1,0 +1,189 @@
+<div ng-controller="dashboard" ng-init="onloading()"> 
+    <section class="bodyWarper">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingOne">
+                                <button class="accordion-button collapsed d-flex p-3" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                    aria-controls="flush-collapseOne">
+                                    <div class="me-2"><img src="https://analysis.aditya.ac.in/uploads/student_photos/{{stdinfo.std_id}}.jpg" class="rounded shadow dpPic"></div>
+                                    <div>{{stdinfo.student_name}}<br> <small
+                                            class="d-block text-muted">{{stdinfo.student_no}}</small>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <table class="content-table">
+                                        <tr>
+                                            <td><img src="assets/images/course.svg"></td>
+                                            <td>
+                                                <div>Course</div>
+                                                <div class="text-muted">{{stdinfo.course_name}}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="assets/images/section.svg"></td>
+                                            <td>
+                                                <div>Section</div>
+                                                <div class="text-muted">{{stdinfo.section_name}}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="assets/images/campus.svg"></td>
+                                            <td>
+                                                <div>Campus</div>
+                                                <div class="text-muted">{{stdinfo.campus_name}}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="assets/images/institute.svg"></td>
+                                            <td>
+                                                <div>Institute</div>
+                                                <div class="text-muted">{{stdinfo.school_name}}, {{stdinfo.school_city}} </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="pointerclass">
+                                            <td> <i class="fa fa-sign-out fa-2x"> </i>  </td>
+                                            <td>
+                                                <div ng-click="logout()">Logout</div>    
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="g-scrolling-carousel">
+                        <div class="items">
+                            <a>
+                                <aside class="swipercard text-white pointerclass" ng-click="pageredirect('attendance')">
+                                    <table class="tab-content">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center slicdercardCont">
+                                                    <div class="h6">Attendance</div>
+                                                    <div class="display-6">{{total_atten | number:2}}%</div>
+
+                                                </td>
+                                                <td class="text-right">
+                                                    <div class="position-relative" style="z-index: 1;"> <img
+                                                            src="assets/images/attendance-boy.png"
+                                                            class="repPic d-block">
+                                                        <aside class="swipercard_blur"> <img
+                                                                src="assets/images/blur.svg"> </aside>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </aside>
+                            </a>
+                            <a>
+                                <aside class="swipercard text-white pointerclass" ng-click="pageredirect('acadamic')">
+                                    <table class="tab-content">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center slicdercardCont">
+                                                    <div class="h6">Academic Exam</div>
+                                                    <div class="display-6">{{total_adc | number:2}}%</div>
+
+                                                </td>
+                                                <td class="text-right">
+                                                    <div class="position-relative" style="z-index: 1;"> <img
+                                                            src="assets/images/academic-boy.png" class="repPic d-block">
+                                                        <aside class="swipercard_blur"> <img
+                                                                src="assets/images/blur.svg"> </aside>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </aside>
+                            </a>
+                            <a>
+                                <aside class="swipercard text-white pointerclass" ng-click="pageredirect('competative')">
+                                    <table class="tab-content">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center slicdercardCont">
+                                                    <div class="h6">Competitive Exam</div>
+                                                    <div class="display-6">{{total_cmp | number:2}}%</div>
+
+                                                </td>
+                                                <td class="text-right">
+                                                    <div class="position-relative" style="z-index: 1;"> <img
+                                                            src="assets/images/competitive-boy-exam.png"
+                                                            class="repPic d-block">
+                                                        <aside class="swipercard_blur"> <img
+                                                                src="assets/images/blur.svg"> </aside>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </aside>
+                            </a>
+                            <a>
+                                <aside class="swipercard text-white pointerclass" ng-click="pageredirect('finance')">
+                                    <table class="tab-content">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center slicdercardCont">
+                                                    <div class="h6">Fee Details</div>
+                                                    <div class="display-6">{{total_fees | number}}&#8377; </div>
+
+                                                </td>
+                                                <td class="text-right">
+                                                    <div class="position-relative" style="z-index: 1;"> <img
+                                                            src="assets/images/attendance-boy.png"
+                                                            class="repPic d-block">
+                                                        <aside class="swipercard_blur"> <img
+                                                                src="assets/images/blur.svg"> </aside>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </aside>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <article class="hdngbar">
+                        <h1 class="h3 text-center">Achievements</h1>
+                    </article>
+                </div>
+            </div>
+            <div class="card text-start">
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <figure class="text-center">
+                                <img src="assets/images/ach.svg" class="img-fluid">
+                            </figure>
+                        </div>
+                        <div class="col-md-6">
+                            <figure class="text-center">
+                                <img src="assets/images/ach.svg" class="img-fluid">
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section> 
+</div> 

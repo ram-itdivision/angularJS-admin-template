@@ -1,0 +1,94 @@
+<link rel="stylesheet" href="./assets/css/style.css">
+<div class="bodyWarper" ng-controller="receipt" ng-init="receipt_loading()">   
+    <div class="card">
+        <div class="card-body shawdow mb-3">  
+            <section class="p-3">
+                <div class="media ml-4 mt-0 mr-4 pt-2">
+                    <img src="./assets/images/aditya-logo.png" class="mr-2 pb-1 img-fluid" alt="..." >
+                    <div class="media-body  text-left">
+                        <h6 class="mt-0 "  style="font-weight: 700;"><b>{{fee_details[0].feeinfo[0].school_name}}</b> </h6>
+                        <div style="font-size:10px;">{{fee_details[0].feeinfo[0].society_name}}</div>
+                        <div style="font-size:14px;">{{fee_details[0].feeinfo[0].school_city}}</div>
+                    </div>
+                </div> 
+                <div> 
+                    <div class="mt-2">
+                        <table class="w-100">
+                            <tr>
+                                <td>
+                                    <h4 class="h3">FEE RECEIPT</h4>
+                                    <div style="font-size: 14px;">
+                                        <span>#{{fee_details[0].feeinfo[0].receipt_no}}</span><br />
+                                        <span>{{fee_details[0].feeinfo[0].paymentdate | date:'dd-MM-yyyy'}}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <img class="float-right" style="width: 70px;"
+                                        src="https://chart.googleapis.com/chart?chs=100x100&chld=L|0&&cht=qr&chl={{fee_details[0].feeinfo[0].receipt_no}}&choe=UTF-8">
+                                </td> 
+                            </tr>
+                        </table>
+                        <hr />
+                    </div>
+                </div>
+                <div class="row ml-4 mr-4  mt-0">
+                    <div class="col-12"> 
+                        <div class="row"> 
+                            <div class="text-left mt-2">
+                                <small>SUC: {{fee_details[0].student_no}} </small><br />
+                                <h6   style="font-weight: 700;">{{fee_details[0].student_name}}</h6>
+                                <small>C/O {{fee_details[0].father_name}}</small>
+                            </div> 
+                        </div> 
+                        <table class="w-100" style="font-size: 14px;">
+                            <tr>
+                                <td>
+                                    <p class="text-left">
+                                        <small>Branch</small><br />
+                                        <span style="font-weight: 700;font-size: 12px;">{{fee_details[0].campus_name}}</span>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="text-left">
+                                        <small>Course Details</small><br />
+                                        <span style="font-weight: 700; font-size: 12px;">{{fee_details[0].course_name}}/{{fee_details[0].section_name}}/{{fee_details[0].roll_no}}</span>
+                                    </p>
+                                </td> 
+                            </tr>
+                        </table> 
+                        <table class="w-100 mt-4" style="font-size: 14px;">
+                            <tr >
+                                <td><small>SNO</small></td>
+                                <td><small>YEAR</small></td>
+                                <td><small>FEE NAME</small></td>
+                                <td align="right"><small>AMOUNT</small></td>
+                            </tr>
+                            <tr ng-repeat="x in fee_details[0].feeinfo">
+                                <td>{{$index+1}}</td>
+                                <td>{{x.year_name}}</td>
+                                <td>{{x.fee_name}}</td>
+                                <td align="right"> {{x.amount_paid}}</td>
+                            </tr> 
+                            <tr> 
+                          
+                                <td class="pt-2 border-top" align="right" colspan="4">
+                                    <strong  style="font-weight: 700;">TOTAL</strong>
+                                    <strong  style="font-weight: 700;">&nbsp{{fee_details[0].total_paid_amount}}</strong>
+                                </td>
+                              
+                            </tr> 
+                        </table> 
+                        <p style="font-size:12px;text-align: center;margin-top: 10px;">This is computer generated
+                            receipt signature not required.</p> 
+                        <table class="w-100">
+                            <tr>
+                                <td> <img class="text-left" src="./assets/images/analysis.png" style="width: 80px;"></td>
+                                <td> <img class="float-right" src="./assets/images/verified.png" style="width: 60px;"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div> 
+                </section>
+        </div>
+    </div> 
+</div>
